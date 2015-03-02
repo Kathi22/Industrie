@@ -3,4 +3,11 @@
   <groupId>industrie</groupId>
   <artifactId>projekt</artifactId>
   <version>0.0.1-SNAPSHOT</version>
+  <dependencies>
+  	<dependency>
+  		<groupId>com.espertech</groupId>
+  		<artifactId>esper</artifactId>
+  		<version>5.1.0</version>
+  	</dependency>
+  </dependencies>
 </project>
