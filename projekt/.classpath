@@ -32,5 +32,19 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="Prosys-Client/lib/bcpkix-jdk15on-147.jar"/>
+	<classpathentry kind="lib" path="Prosys-Client/lib/bcprov-jdk15on-147.jar"/>
+	<classpathentry kind="lib" path="Prosys-Client/lib/commons-logging-1.1.1.jar"/>
+	<classpathentry kind="lib" path="Prosys-Client/lib/httpclient-4.2.5.jar"/>
+	<classpathentry kind="lib" path="Prosys-Client/lib/httpcore-4.2.4.jar"/>
+	<classpathentry kind="lib" path="Prosys-Client/lib/httpcore-nio-4.2.4.jar"/>
+	<classpathentry kind="lib" path="Prosys-Client/lib/log4j-1.2.17.jar"/>
+	<classpathentry kind="lib" path="Prosys-Client/lib/Opc.Ua.Stack-1.02.336.8.jar"/>
+	<classpathentry kind="lib" path="Prosys-Client/lib/Prosys-OPC-UA-Java-SDK-Client-Server-Evaluation-2.1.0-436.jar"/>
+	<classpathentry kind="lib" path="Prosys-Client/lib/sc-light-jdk15on-1.47.0.2.jar"/>
+	<classpathentry kind="lib" path="Prosys-Client/lib/scpkix-jdk15on-1.47.0.2.jar"/>
+	<classpathentry kind="lib" path="Prosys-Client/lib/scprov-jdk15on-1.47.0.2.jar"/>
+	<classpathentry kind="lib" path="Prosys-Client/lib/slf4j-api-1.7.7.jar"/>
+	<classpathentry kind="lib" path="Prosys-Client/lib/slf4j-log4j12-1.7.7.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
