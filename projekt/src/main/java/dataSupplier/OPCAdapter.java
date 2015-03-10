@@ -1,6 +1,7 @@
 package dataSupplier;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.UnknownHostException;
 import java.util.List;
 import java.util.Locale;
@@ -27,11 +28,11 @@ public class OPCAdapter extends Adapter
 {
 	private UaClient client;
 	
-	public OPCAdapter(Configuration config)
+	public OPCAdapter(Configuration config) throws Exception
 	{
 		super(config);
 		// Create client object 
-		client = new UaClient(this.getConfig().getServerUrl());
+		client = new UaClient(this.getConfig().getURL());
 		
 		client.setSecurityMode(SecurityMode.NONE);
 		
@@ -73,6 +74,7 @@ public class OPCAdapter extends Adapter
 			{
 				System.out.println(arg1);
 				Types type = new Types(arg1);
+				// in XML umwandeln
 			}
 		});
 	}
