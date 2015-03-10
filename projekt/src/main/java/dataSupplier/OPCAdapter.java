@@ -1,10 +1,13 @@
 package dataSupplier;
 
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.net.UnknownHostException;
 import java.util.List;
 import java.util.Locale;
+
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
 
 import org.opcfoundation.ua.builtintypes.DataValue;
 import org.opcfoundation.ua.builtintypes.LocalizedText;
@@ -57,26 +60,37 @@ public class OPCAdapter extends Adapter
 
 	@Override
 	public void getData() throws Exception {
-		NodeId target2 = new NodeId(5, "Counter1");
-		
+		NodeId target2;
+		MonitoredDataItem item;
 		Subscription subscription = new Subscription();
-		MonitoredDataItem item = new MonitoredDataItem(target2, Attributes.Value, MonitoringMode.Reporting);
+		for(int i = 0; i < this.getConfig().getItems().size(); i++)
+		{
+			target2 = new NodeId(5, this.getConfig().getItems().get(i));
+			item = new MonitoredDataItem(target2, Attributes.Value, MonitoringMode.Reporting);
+			subscription.addItem(item);
+			item.setDataChangeListener(new MonitoredDataItemListener()
+			{	
+				@Override
+				public void onDataChange(MonitoredDataItem arg0, DataValue arg1,
+						DataValue arg2)
+				{
+					if (arg1 != null)
+					{
+						Types<Double> type = new Types<Double>(arg1);
+						JAXBContext jc;
+						try {
+							jc = JAXBContext.newInstance(Types.class );
+							Marshaller m = jc.createMarshaller();
+							m.marshal(type, System.out);
+						} catch (JAXBException e) {
+							e.printStackTrace();
+						}
+					}
+				}
+			});
+		}		
 		
-		subscription.addItem(item);
 		client.addSubscription(subscription);
-		
-		
-		item.setDataChangeListener(new MonitoredDataItemListener()
-		{	
-			@Override
-			public void onDataChange(MonitoredDataItem arg0, DataValue arg1,
-					DataValue arg2)
-			{
-				System.out.println(arg1);
-				Types type = new Types(arg1);
-				// in XML umwandeln
-			}
-		});
 	}
 	
 	/**

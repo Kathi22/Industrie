@@ -1,45 +1,39 @@
 package dataSupplier;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
+
 import org.opcfoundation.ua.builtintypes.DataValue;
 import org.opcfoundation.ua.builtintypes.DateTime;
-import org.opcfoundation.ua.builtintypes.StatusCode;
-import org.opcfoundation.ua.builtintypes.Variant;
+import org.opcfoundation.ua.builtintypes.UnsignedInteger;
 
-
-public class Types
+@XmlType(name = "", propOrder = {
+	      "value",
+	      "timestamp",
+	      "quality"
+	})
+@XmlRootElement(name="Types")
+public class Types<T>
 {
-	private Variant value;
+	@XmlElement(required=true)
+	private T value;
+	
+	@XmlElement(required=true)
 	private DateTime timestamp;
-	private StatusCode quality;
+	
+	@XmlElement(required=true)
+	private UnsignedInteger quality;
+	
+	public Types()
+	{
+		
+	}
 	
 	public Types(DataValue item)
 	{
-		this.value = item.getValue();
-		this.timestamp = item.getServerTimestamp();
-		this.quality = item.getStatusCode();
+		this.value = (T) item.getValue().getValue();
+		this.timestamp = item.getSourceTimestamp();
+		this.quality = item.getStatusCode().getValue();
 	}
-
-	public Variant getValue() {
-		return value;
-	}
-
-	public void setValue(Variant value) {
-		this.value = value;
-	}
-
-	public DateTime getTimestamp() {
-		return timestamp;
-	}
-
-	public void setTimestamp(DateTime timestamp) {
-		this.timestamp = timestamp;
-	}
-
-	public StatusCode getQuality() {
-		return quality;
-	}
-
-	public void setQuality(StatusCode quality) {
-		this.quality = quality;
-	}	
 }

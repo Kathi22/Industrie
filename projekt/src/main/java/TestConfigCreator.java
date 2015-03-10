@@ -1,13 +1,10 @@
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.OutputStream;
 import java.util.Vector;
 
 import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 
 import dataSupplier.Configuration;
+import dataSupplier.OPCAdapter;
 
 
 public class TestConfigCreator {
@@ -28,8 +25,9 @@ public class TestConfigCreator {
 			Marshaller m = jc.createMarshaller();
 			//OutputStream os = new FileOutputStream("C:\\Users\\D059185\\Documents\\workbench\\machine.xml" );
 		    m.marshal( c1, System.out);//os );
-		    
-		} catch (JAXBException e) {
+		    OPCAdapter opc = new OPCAdapter(c1);
+		    opc.getData();
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
