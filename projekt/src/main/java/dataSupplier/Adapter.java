@@ -1,4 +1,13 @@
 package dataSupplier;
-public class Adapter {
-
+public abstract class Adapter
+{
+	public Adapter()
+	{
+		
+	}
+	
+	public Adapter(Configuration config)
+	{
+		
+	}
 }
