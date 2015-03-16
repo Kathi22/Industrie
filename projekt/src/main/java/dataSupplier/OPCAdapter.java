@@ -20,6 +20,7 @@ import org.opcfoundation.ua.core.MonitoringMode;
 import org.opcfoundation.ua.core.ReferenceDescription;
 import org.opcfoundation.ua.transport.security.SecurityMode;
 
+import com.espertech.esper.client.soda.InstanceOfExpression;
 import com.prosysopc.ua.ApplicationIdentity;
 import com.prosysopc.ua.SecureIdentityException;
 import com.prosysopc.ua.client.MonitoredDataItem;
@@ -76,11 +77,45 @@ public class OPCAdapter extends Adapter
 				{
 					if (arg1 != null)
 					{
-						Types<Double> type = new Types<Double>(arg1);
+						
+						Types type = null;
+						if (arg1.getValue().getValue() instanceof Double)
+						{
+							type = new Types<Double>(arg1);
+						}
+						else if (arg1.getValue().getValue() instanceof Integer)
+						{
+							type = new Types<Integer>(arg1);
+						}
+						else if (arg1.getValue().getValue() instanceof Short)
+						{
+							type = new Types<Short>(arg1);
+						}
+						else if (arg1.getValue().getValue() instanceof Byte)
+						{
+							type = new Types<Byte>(arg1);
+						}
+						else if (arg1.getValue().getValue() instanceof Long)
+						{
+							type = new Types<Long>(arg1);
+						}
+						else if (arg1.getValue().getValue() instanceof Float)
+						{
+							type = new Types<Float>(arg1);
+						}
+						else if (arg1.getValue().getValue() instanceof Character)
+						{
+							type = new Types<Character>(arg1);
+						}
+						else if (arg1.getValue().getValue() instanceof String)
+						{
+							type = new Types<String>(arg1);
+						}
 						JAXBContext jc;
 						try {
 							jc = JAXBContext.newInstance(Types.class );
 							Marshaller m = jc.createMarshaller();
+							m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 							m.marshal(type, System.out);
 						} catch (JAXBException e) {
 							e.printStackTrace();

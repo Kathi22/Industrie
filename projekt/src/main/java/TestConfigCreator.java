@@ -23,6 +23,7 @@ public class TestConfigCreator {
 		try {
 			JAXBContext jc = JAXBContext.newInstance( Configuration.class );
 			Marshaller m = jc.createMarshaller();
+			m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 			//OutputStream os = new FileOutputStream("C:\\Users\\D059185\\Documents\\workbench\\machine.xml" );
 		    m.marshal( c1, System.out);//os );
 		    OPCAdapter opc = new OPCAdapter(c1);

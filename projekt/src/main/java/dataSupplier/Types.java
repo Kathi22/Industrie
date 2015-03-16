@@ -5,8 +5,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 import org.opcfoundation.ua.builtintypes.DataValue;
-import org.opcfoundation.ua.builtintypes.DateTime;
-import org.opcfoundation.ua.builtintypes.UnsignedInteger;
 
 @XmlType(name = "", propOrder = {
 	      "value",
@@ -20,10 +18,10 @@ public class Types<T>
 	private T value;
 	
 	@XmlElement(required=true)
-	private DateTime timestamp;
+	private long timestamp;
 	
 	@XmlElement(required=true)
-	private UnsignedInteger quality;
+	private int quality;
 	
 	public Types()
 	{
@@ -33,7 +31,7 @@ public class Types<T>
 	public Types(DataValue item)
 	{
 		this.value = (T) item.getValue().getValue();
-		this.timestamp = item.getSourceTimestamp();
-		this.quality = item.getStatusCode().getValue();
+		this.timestamp =item.getSourceTimestamp().getMilliSeconds();
+		this.quality = Integer.parseInt(item.getStatusCode().getValue().toString());
 	}
 }
