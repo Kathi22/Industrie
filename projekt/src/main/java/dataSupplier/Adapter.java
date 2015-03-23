@@ -1,7 +1,6 @@
 package dataSupplier;
 
-import com.prosysopc.ua.client.MonitoredDataItem;
-import com.prosysopc.ua.client.UaClient;
+import java.io.OutputStream;
 
 public abstract class Adapter
 {
@@ -11,8 +10,10 @@ public abstract class Adapter
 	{
 		this.setConfig(config);
 	}
-	
+
 	public abstract void getData() throws Exception;
+	
+	public abstract void send(String s);
 
 	public Configuration getConfig() {
 		return config;

@@ -13,4 +13,11 @@ public class ERPAdapter extends Adapter
 	{
 		
 	}
+
+	@Override
+	public void send(String s)
+	{
+		// TODO Auto-generated method stub
+		
+	}
 }

@@ -1,6 +1,9 @@
 package dataSupplier;
 
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintStream;
+import java.io.StringWriter;
 import java.net.UnknownHostException;
 import java.util.List;
 import java.util.Locale;
@@ -20,7 +23,6 @@ import org.opcfoundation.ua.core.MonitoringMode;
 import org.opcfoundation.ua.core.ReferenceDescription;
 import org.opcfoundation.ua.transport.security.SecurityMode;
 
-import com.espertech.esper.client.soda.InstanceOfExpression;
 import com.prosysopc.ua.ApplicationIdentity;
 import com.prosysopc.ua.SecureIdentityException;
 import com.prosysopc.ua.client.MonitoredDataItem;
@@ -116,7 +118,9 @@ public class OPCAdapter extends Adapter
 							jc = JAXBContext.newInstance(Types.class );
 							Marshaller m = jc.createMarshaller();
 							m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-							m.marshal(type, System.out);
+							StringWriter writer = new StringWriter();
+							m.marshal(type, writer);
+							send(writer.toString());
 						} catch (JAXBException e) {
 							e.printStackTrace();
 						}
@@ -126,6 +130,11 @@ public class OPCAdapter extends Adapter
 		}		
 		
 		client.addSubscription(subscription);
+	}
+	
+	public void send(String s)
+	{
+		
 	}
 	
 	/**
