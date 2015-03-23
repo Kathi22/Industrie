@@ -1,5 +1,7 @@
 package dataConsumer;
 
+import javax.xml.bind.JAXBException;
+
 import com.rabbitmq.client.QueueingConsumer;
 
 public abstract class Consumer {
@@ -12,8 +14,8 @@ public abstract class Consumer {
 	}
 
 	
-	public abstract void receive();
-	public abstract void process(String message);
+	public abstract void receive() throws Exception;
+	public abstract void process(String message) throws Exception;
 
 
 	public QueueingConsumer getConsumer() {
