@@ -34,6 +34,7 @@ import com.rabbitmq.client.ConnectionFactory;
 public class OPCAdapter extends Adapter
 {
 	private UaClient client;
+	private static final String EXCHANGE_NAME = "logs";
 	
 	public OPCAdapter(Configuration config) throws Exception
 	{
@@ -143,9 +144,9 @@ public class OPCAdapter extends Adapter
         Connection connection = factory.newConnection();
         Channel channel = connection.createChannel();
 
-        channel.exchangeDeclare("logs", "fanout");
+        channel.exchangeDeclare(EXCHANGE_NAME, "fanout");
 
-        channel.basicPublish("logs", "", null, s.getBytes());
+        channel.basicPublish(EXCHANGE_NAME, "", null, s.getBytes());
         System.out.println(" [x] Sent '" + s + "'");
 
         channel.close();
