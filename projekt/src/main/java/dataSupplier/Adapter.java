@@ -1,6 +1,6 @@
 package dataSupplier;
 
-import java.io.OutputStream;
+import java.io.IOException;
 
 public abstract class Adapter
 {
@@ -13,7 +13,7 @@ public abstract class Adapter
 
 	public abstract void getData() throws Exception;
 	
-	public abstract void send(String s);
+	public abstract void send(String s)  throws IOException;
 
 	public Configuration getConfig() {
 		return config;

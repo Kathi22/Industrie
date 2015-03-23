@@ -1,8 +1,6 @@
 package dataSupplier;
 
 import java.io.IOException;
-import java.io.OutputStream;
-import java.io.PrintStream;
 import java.io.StringWriter;
 import java.net.UnknownHostException;
 import java.util.List;
@@ -29,6 +27,9 @@ import com.prosysopc.ua.client.MonitoredDataItem;
 import com.prosysopc.ua.client.MonitoredDataItemListener;
 import com.prosysopc.ua.client.Subscription;
 import com.prosysopc.ua.client.UaClient;
+import com.rabbitmq.client.Channel;
+import com.rabbitmq.client.Connection;
+import com.rabbitmq.client.ConnectionFactory;
 
 public class OPCAdapter extends Adapter
 {
@@ -44,7 +45,6 @@ public class OPCAdapter extends Adapter
 		
 		initialize(client);
 		client.connect();
-		DataValue value = client.readValue(Identifiers.Server_ServerStatus_State);
 
 		client.getAddressSpace().setMaxReferencesPerNode(1000);
 		NodeId nid = Identifiers.RootFolder; 
@@ -124,6 +124,10 @@ public class OPCAdapter extends Adapter
 						} catch (JAXBException e) {
 							e.printStackTrace();
 						}
+						catch (IOException e)
+						{
+							e.printStackTrace();
+						}
 					}
 				}
 			});
@@ -132,9 +136,20 @@ public class OPCAdapter extends Adapter
 		client.addSubscription(subscription);
 	}
 	
-	public void send(String s)
+	public void send(String s) throws IOException
 	{
-		
+		ConnectionFactory factory = new ConnectionFactory();
+        factory.setHost("localhost");
+        Connection connection = factory.newConnection();
+        Channel channel = connection.createChannel();
+
+        channel.exchangeDeclare("logs", "fanout");
+
+        channel.basicPublish("logs", "", null, s.getBytes());
+        System.out.println(" [x] Sent '" + s + "'");
+
+        channel.close();
+        connection.close();
 	}
 	
 	/**
