@@ -3,6 +3,7 @@ import java.util.Vector;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
 
+import dataConsumer.EventConsumer;
 import dataSupplier.Configuration;
 import dataSupplier.OPCAdapter;
 
@@ -27,7 +28,11 @@ public class TestConfigCreator {
 			//OutputStream os = new FileOutputStream("C:\\Users\\D059185\\Documents\\workbench\\machine.xml" );
 		    m.marshal( c1, System.out);//os );
 		    OPCAdapter opc = new OPCAdapter(c1);
-		    opc.getData();
+		    EventConsumer ec1 = new EventConsumer("logs");
+		    opc.getData(); 
+		    ec1.receive();		    
+
+		    
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
