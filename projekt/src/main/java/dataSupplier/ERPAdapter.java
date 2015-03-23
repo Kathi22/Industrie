@@ -1,5 +1,7 @@
 package dataSupplier;
 
+import java.io.IOException;
+
 public class ERPAdapter extends Adapter
 {
 
@@ -15,9 +17,8 @@ public class ERPAdapter extends Adapter
 	}
 
 	@Override
-	public void send(String s)
+	public void send(String s) throws IOException
 	{
-		// TODO Auto-generated method stub
 		
 	}
 }
