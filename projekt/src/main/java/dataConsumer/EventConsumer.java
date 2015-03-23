@@ -40,7 +40,7 @@ public class EventConsumer extends Consumer
 		this.setConsumer(new QueueingConsumer(channel));
 		channel.basicConsume(queueName, true, this.getConsumer());
 		epService = EPServiceProviderManager.getDefaultProvider();
-		String expression = "select avg(price) from org.myapp.event.OrderEvent.win:time(30 sec)";
+		String expression = "select quality from dataSupplier.Types.win:time(30 sec)";
 		EPStatement statement = epService.getEPAdministrator().createEPL(
 				expression);
 

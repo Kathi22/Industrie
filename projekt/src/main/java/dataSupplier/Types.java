@@ -11,7 +11,7 @@ import org.opcfoundation.ua.builtintypes.DataValue;
 	      "timestamp",
 	      "quality"
 	})
-@XmlRootElement(name="Types")
+
 public class Types<T>
 {
 	@XmlElement(required=true)
@@ -33,5 +33,35 @@ public class Types<T>
 		this.value = (T) item.getValue().getValue();
 		this.timestamp =item.getSourceTimestamp().getMilliSeconds();
 		this.quality = Integer.parseInt(item.getStatusCode().getValue().toString());
+	}
+
+	public T getValue()
+	{
+		return value;
+	}
+
+	public void setValue(T value)
+	{
+		this.value = value;
+	}
+
+	public long getTimestamp()
+	{
+		return timestamp;
+	}
+
+	public void setTimestamp(long timestamp)
+	{
+		this.timestamp = timestamp;
+	}
+
+	public int getQuality()
+	{
+		return quality;
+	}
+
+	public void setQuality(int quality)
+	{
+		this.quality = quality;
 	}
 }
