@@ -16,11 +16,9 @@ public class EventConsumer extends Consumer {
 	    factory.setHost("localhost");
 	    Connection connection = factory.newConnection();
 	    Channel channel = connection.createChannel();
-	    //TODO: "logs" to EXCHANGE__NAME
-	    channel.exchangeDeclare("logs", "fanout");
+	    channel.exchangeDeclare(exchangeName, "fanout");
 	    String queueName = channel.queueDeclare().getQueue();
-	    //TODO: "logs" to EXCHANGE__NAME
-	    channel.queueBind(queueName, "logs", "");
+	    channel.queueBind(queueName, exchangeName, "");
 	    
 	    System.out.println(" [*] Waiting for messages. To exit press CTRL+C");
 
