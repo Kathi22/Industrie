@@ -39,6 +39,8 @@ public class TestConfigCreator
 			//OPCConsumer opc1 = new OPCConsumer("logs");
 			ERPConsumer erp1 = new ERPConsumer("CUSTOMER_ORDER_QUEUE");
 			ERPConsumer erp2 = new ERPConsumer("MACHINE_ORDER_QUEUE");
+			OPCConsumer ec2 = new OPCConsumer("logs");
+		    ec2.receive();
 			//opc.getData();
 			//opc1.receive();
 			erp1.receive();
