@@ -3,9 +3,11 @@ import java.util.Vector;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
 
-import dataConsumer.EventConsumer;
+import dataConsumer.ERPConsumer;
+import dataConsumer.OPCConsumer;
 import dataSupplier.Configuration;
 import dataSupplier.OPCAdapter;
+import de.dhbw.mannheim.erpsim.model.CustomerOrder;
 
 public class TestConfigCreator
 {
@@ -33,11 +35,14 @@ public class TestConfigCreator
 			// FileOutputStream("C:\\Users\\D059185\\Documents\\workbench\\machine.xml"
 			// );
 			m.marshal(c1, System.out);// os );
-			OPCAdapter opc = new OPCAdapter(c1);
-			EventConsumer ec1 = new EventConsumer("logs");
-			opc.getData();
-			ec1.receive();
-
+			//OPCAdapter opc = new OPCAdapter(c1);
+			//OPCConsumer opc1 = new OPCConsumer("logs");
+			ERPConsumer erp1 = new ERPConsumer("CUSTOMER_ORDER_QUEUE");
+			ERPConsumer erp2 = new ERPConsumer("MACHINE_ORDER_QUEUE");
+			//opc.getData();
+			//opc1.receive();
+			erp1.receive();
+			erp2.receive();
 		}
 		catch (Exception e)
 		{

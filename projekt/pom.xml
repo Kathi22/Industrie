@@ -3,7 +3,22 @@
   <groupId>industrie</groupId>
   <artifactId>projekt</artifactId>
   <version>0.0.1-SNAPSHOT</version>
+  <repositories>
+    <repository>
+        <id>ioterpsimulator-mvn-repo</id>
+        <url>https://raw.github.com/tarekauel/ioterpsimulator/mvn-repo/</url>
+        <snapshots>
+            <enabled>true</enabled>
+            <updatePolicy>always</updatePolicy>
+        </snapshots>
+    </repository>
+  </repositories>
   <dependencies>
+    <dependency>
+       <groupId>de.dhbw.mannheim</groupId>
+       <artifactId>erpsim</artifactId>
+       <version>0.1-SNAPSHOT</version>
+    </dependency>
   	<dependency>
   		<groupId>com.espertech</groupId>
   		<artifactId>esper</artifactId>

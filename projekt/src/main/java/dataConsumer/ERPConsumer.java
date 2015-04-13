@@ -17,16 +17,22 @@ import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.ConsumerCancelledException;
 import com.rabbitmq.client.QueueingConsumer;
 import com.rabbitmq.client.ShutdownSignalException;
+import com.thoughtworks.xstream.XStream;
 
 import dataSupplier.Types;
+import de.dhbw.mannheim.erpsim.model.CustomerOrder;
+import de.dhbw.mannheim.erpsim.model.MachineOrder;
 
-public class EventConsumer extends Consumer
+public class ERPConsumer extends Consumer
 {
 	EPServiceProvider epService;
+	String exchangeName;
+	XStream xstream = new XStream();
 
-	public EventConsumer(String exchangeName) throws IOException
+	public ERPConsumer(String exchangeName) throws IOException
 	{
 		super(exchangeName);
+		this.exchangeName = exchangeName;
 		ConnectionFactory factory = new ConnectionFactory();
 		factory.setHost("localhost");
 		Connection connection = factory.newConnection();
@@ -51,11 +57,23 @@ public class EventConsumer extends Consumer
 	@Override
 	public void process(String message) throws JAXBException
 	{
-		JAXBContext typesContext = JAXBContext.newInstance(Types.class);
-		Unmarshaller um = typesContext.createUnmarshaller();
-		Types t = (Types) um.unmarshal(new StreamSource(new StringReader(
-				message)));
-		epService.getEPRuntime().sendEvent(t);
+		if (this.exchangeName == "CUSTOMER_ORDER_QUEUE")
+		{
+			//JAXBContext customerContext = JAXBContext.newInstance(CustomerOrder.class);
+			//Unmarshaller um = customerContext.createUnmarshaller();
+			CustomerOrder co = (CustomerOrder) xstream.fromXML(message);
+					//um.unmarshal(new StreamSource(new StringReader(message)));
+			epService.getEPRuntime().sendEvent(co);
+		}
+		else if (this.exchangeName == "MACHINE_ORDER_QUEUE")
+		{
+			//JAXBContext machineContext = JAXBContext.newInstance(MachineOrder.class);
+			//Unmarshaller um = machineContext.createUnmarshaller();
+			MachineOrder mo = (MachineOrder) xstream.fromXML(message);
+					//(MachineOrder) um.unmarshal(new StreamSource(new StringReader(message)));
+			epService.getEPRuntime().sendEvent(mo);
+		}
+		
 	}
 
 	@Override
