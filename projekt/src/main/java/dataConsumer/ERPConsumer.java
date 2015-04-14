@@ -1,25 +1,21 @@
 package dataConsumer;
 
 import java.io.IOException;
-import java.io.StringReader;
+import java.io.ObjectStreamException;
 
-import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
-import javax.xml.transform.stream.StreamSource;
 
 import com.espertech.esper.client.EPServiceProvider;
 import com.espertech.esper.client.EPServiceProviderManager;
 import com.espertech.esper.client.EPStatement;
-import com.rabbitmq.client.ConnectionFactory;
-import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.Channel;
+import com.rabbitmq.client.Connection;
+import com.rabbitmq.client.ConnectionFactory;
 import com.rabbitmq.client.ConsumerCancelledException;
 import com.rabbitmq.client.QueueingConsumer;
 import com.rabbitmq.client.ShutdownSignalException;
-import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.XStreamer;
 
-import dataSupplier.Types;
 import de.dhbw.mannheim.erpsim.model.CustomerOrder;
 import de.dhbw.mannheim.erpsim.model.MachineOrder;
 
@@ -27,7 +23,7 @@ public class ERPConsumer extends Consumer
 {
 	EPServiceProvider epService;
 	String exchangeName;
-	XStream xstream = new XStream();
+	XStreamer xstream = new XStreamer();
 
 	public ERPConsumer(String exchangeName) throws IOException
 	{
@@ -55,7 +51,7 @@ public class ERPConsumer extends Consumer
 	}
 
 	@Override
-	public void process(String message) throws JAXBException
+	public void process(String message) throws JAXBException, ClassNotFoundException, ObjectStreamException
 	{
 		if (this.exchangeName == "CUSTOMER_ORDER_QUEUE")
 		{
@@ -77,7 +73,7 @@ public class ERPConsumer extends Consumer
 	}
 
 	@Override
-	public void receive() throws JAXBException
+	public void receive() throws JAXBException, ClassNotFoundException, ObjectStreamException
 	{
 		while (true)
 		{
