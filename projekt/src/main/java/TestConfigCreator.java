@@ -6,7 +6,6 @@ import javax.xml.bind.Marshaller;
 import dataConsumer.ERPConsumer;
 import dataConsumer.OPCConsumer;
 import dataSupplier.Configuration;
-import dataSupplier.OPCAdapter;
 
 public class TestConfigCreator
 {
@@ -22,7 +21,7 @@ public class TestConfigCreator
 		Configuration c1 = new Configuration(
 				"opc.tcp://localhost:53530/OPCUA/SimulationServer", testvector);
 
-		// COnfig-Objekte Marshallalalaen. (Obejekt to XML) //XML iwo speichern
+		// Config-Objekte Marshallalalaen. (Obejekt to XML) //XML iwo speichern
 		// :D
 
 		try
