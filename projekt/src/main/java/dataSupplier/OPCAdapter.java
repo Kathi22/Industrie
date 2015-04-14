@@ -52,14 +52,14 @@ public class OPCAdapter extends Adapter
 		
 		List<ReferenceDescription> references = client.getAddressSpace().browse(nid);
 		
-		// Example of Namespace Browsing 
+		/*// Example of Namespace Browsing 
 		NodeId target; 
 		ReferenceDescription r = references.get(0);
 		
 		target = client.getAddressSpace().getNamespaceTable().toNodeId(r.getNodeId()); 
 		references = client.getAddressSpace().browse(target);
 		r = references.get(4);
-		target = client.getAddressSpace().getNamespaceTable().toNodeId(r.getNodeId());
+		target = client.getAddressSpace().getNamespaceTable().toNodeId(r.getNodeId());*/
 	}
 
 	@Override
@@ -69,7 +69,7 @@ public class OPCAdapter extends Adapter
 		Subscription subscription = new Subscription();
 		for(int i = 0; i < this.getConfig().getItems().size(); i++)
 		{
-			target2 = new NodeId(5, this.getConfig().getItems().get(i));
+			target2 = new NodeId(2, this.getConfig().getItems().get(i));
 			item = new MonitoredDataItem(target2, Attributes.Value, MonitoringMode.Reporting);
 			subscription.addItem(item);
 			item.setDataChangeListener(new MonitoredDataItemListener()
@@ -81,6 +81,12 @@ public class OPCAdapter extends Adapter
 					if (arg1 != null)
 					{
 						
+						OPCType type = null;
+						if (arg1.getValue().getValue() instanceof Boolean)
+						{
+							type = new OPCType<Boolean>(arg1);
+						}
+						/*
 						Types type = null;
 						if (arg1.getValue().getValue() instanceof Double)
 						{
@@ -114,13 +120,15 @@ public class OPCAdapter extends Adapter
 						{
 							type = new Types<String>(arg1);
 						}
+						*/
 						JAXBContext jc;
 						try {
-							jc = JAXBContext.newInstance(Types.class );
+							jc = JAXBContext.newInstance(OPCType.class );
 							Marshaller m = jc.createMarshaller();
 							m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 							StringWriter writer = new StringWriter();
 							m.marshal(type, writer);
+							System.out.println(writer.toString());
 							send(writer.toString());
 						} catch (JAXBException e) {
 							e.printStackTrace();

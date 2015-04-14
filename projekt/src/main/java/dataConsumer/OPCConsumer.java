@@ -18,6 +18,7 @@ import com.rabbitmq.client.ConsumerCancelledException;
 import com.rabbitmq.client.QueueingConsumer;
 import com.rabbitmq.client.ShutdownSignalException;
 
+import dataSupplier.OPCType;
 import dataSupplier.Types;
 
 public class OPCConsumer extends Consumer
@@ -51,9 +52,9 @@ public class OPCConsumer extends Consumer
 	@Override
 	public void process(String message) throws JAXBException
 	{
-		JAXBContext typesContext = JAXBContext.newInstance(Types.class);
+		JAXBContext typesContext = JAXBContext.newInstance(OPCType.class);
 		Unmarshaller um = typesContext.createUnmarshaller();
-		Types t = (Types) um.unmarshal(new StreamSource(new StringReader(
+		OPCType t = (OPCType) um.unmarshal(new StreamSource(new StringReader(
 				message)));
 		epService.getEPRuntime().sendEvent(t);
 	}
