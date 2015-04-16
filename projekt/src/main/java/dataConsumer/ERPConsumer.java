@@ -14,7 +14,7 @@ import com.rabbitmq.client.ConnectionFactory;
 import com.rabbitmq.client.ConsumerCancelledException;
 import com.rabbitmq.client.QueueingConsumer;
 import com.rabbitmq.client.ShutdownSignalException;
-import com.thoughtworks.xstream.XStreamer;
+import com.thoughtworks.xstream.XStream;
 
 import de.dhbw.mannheim.erpsim.model.CustomerOrder;
 import de.dhbw.mannheim.erpsim.model.MachineOrder;
@@ -23,7 +23,7 @@ public class ERPConsumer extends Consumer
 {
 	EPServiceProvider epService;
 	String exchangeName;
-	XStreamer xstream = new XStreamer();
+	XStream xstream = new XStream();
 
 	public ERPConsumer(String exchangeName) throws IOException
 	{
