@@ -57,20 +57,20 @@ public class Main
 		    opca2.getData();
 		    
 		    //OPC-Consumer für Pi
-			OPCConsumer opcc2 = new OPCConsumer("NFC_DATA_QUEUE");
+			//OPCConsumer opcc2 = new OPCConsumer("NFC_DATA_QUEUE");
 			
 			//OPC-Consumer für Strasse
 			OPCConsumer opcc3 = new OPCConsumer("MACHINE_DATA_QUEUE");
 			
 			//ERP-Consumer für Kunden- und Maschinendaten
-			ERPConsumer erp1 = new ERPConsumer("CUSTOMER_ORDER_QUEUE");
-			ERPConsumer erp2 = new ERPConsumer("MACHINE_ORDER_QUEUE");
+			//ERPConsumer erp1 = new ERPConsumer("CUSTOMER_ORDER_QUEUE");
+			//ERPConsumer erp2 = new ERPConsumer("MACHINE_ORDER_QUEUE");
 
 			//Daten empfangen
-		    opcc2.receive();
+		    //opcc2.receive();
 		    opcc3.receive();
-			erp1.receive();
-			erp2.receive();
+			//erp1.receive();
+			//erp2.receive();
 		}
 		catch (Exception e)
 		{

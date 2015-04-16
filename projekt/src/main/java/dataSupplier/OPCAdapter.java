@@ -70,6 +70,7 @@ public class OPCAdapter extends Adapter
 		for(int i = 0; i < this.getConfig().getItems().size(); i++)
 		{
 			target2 = new NodeId(2, this.getConfig().getItems().get(i));
+			final String name = this.getConfig().getItems().get(i);
 			item = new MonitoredDataItem(target2, Attributes.Value, MonitoringMode.Reporting);
 			subscription.addItem(item);
 			item.setDataChangeListener(new MonitoredDataItemListener()
@@ -84,7 +85,7 @@ public class OPCAdapter extends Adapter
 						OPCType type = null;
 						if (arg1.getValue().getValue() instanceof Boolean)
 						{
-							type = new OPCType<Boolean>(arg1);
+							type = new OPCType<Boolean>(arg1, name);
 						}
 						/*
 						Types type = null;
