@@ -82,7 +82,7 @@ public class ERPConsumer extends Consumer
 			{
 				delivery = this.getConsumer().nextDelivery();
 				String message = new String(delivery.getBody());
-				System.out.println(" [x] Received '" + message + "'");
+				System.out.println(" [x] ERP-Consumer(" + exchangeName + "): Received '" + message + "'");
 				process(message);
 			}
 			catch (ShutdownSignalException e)

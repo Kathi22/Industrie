@@ -41,7 +41,7 @@ public class OPCConsumer extends Consumer
 		this.setConsumer(new QueueingConsumer(channel));
 		channel.basicConsume(queueName, true, this.getConsumer());
 		epService = EPServiceProviderManager.getDefaultProvider();
-		String expression = "select quality from dataSupplier.Types.win:time(30 sec)";
+		String expression = "select value from dataSupplier.OPCType.win:time(30 sec)";
 		EPStatement statement = epService.getEPAdministrator().createEPL(
 				expression);
 
@@ -52,11 +52,19 @@ public class OPCConsumer extends Consumer
 	@Override
 	public void process(String message) throws JAXBException
 	{
-		JAXBContext typesContext = JAXBContext.newInstance(OPCType.class);
-		Unmarshaller um = typesContext.createUnmarshaller();
-		OPCType t = (OPCType) um.unmarshal(new StreamSource(new StringReader(
+		if (this.EXCHANGE_NAME == "MACHINE_DATA_QUEUE")
+		{
+			JAXBContext typesContext = JAXBContext.newInstance(OPCType.class);
+			Unmarshaller um = typesContext.createUnmarshaller();
+			OPCType t = (OPCType) um.unmarshal(new StreamSource(new StringReader(
 				message)));
-		epService.getEPRuntime().sendEvent(t);
+			epService.getEPRuntime().sendEvent(t);
+		}
+		else if (this.EXCHANGE_NAME == "NFC_DATA_QUEUE")
+		{
+			//TODO Verarbeitung NFC-Tag
+		}
+
 	}
 
 	@Override
@@ -69,7 +77,7 @@ public class OPCConsumer extends Consumer
 			{
 				delivery = this.getConsumer().nextDelivery();
 				String message = new String(delivery.getBody());
-				System.out.println(" [x] Received '" + message + "'");
+				System.out.println(" [x] OPC-Consumer(" + this.EXCHANGE_NAME + ") received '" + message + "'");
 				process(message);
 			}
 			catch (ShutdownSignalException e)
