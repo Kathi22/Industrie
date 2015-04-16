@@ -36,7 +36,7 @@ public class OPCConsumer extends Consumer
 		String queueName = channel.queueDeclare().getQueue();
 		channel.queueBind(queueName, exchangeName, "");
 
-		System.out.println(" [*] Waiting for messages. To exit press CTRL+C");
+		System.out.println("[*] OPC-Consumer(" + exchangeName + "): Waiting for messages.");
 
 		this.setConsumer(new QueueingConsumer(channel));
 		channel.basicConsume(queueName, true, this.getConsumer());

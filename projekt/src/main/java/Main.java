@@ -1,26 +1,23 @@
 import java.util.Vector;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.Marshaller;
-
 import dataConsumer.ERPConsumer;
 import dataConsumer.OPCConsumer;
 import dataSupplier.Configuration;
 import dataSupplier.OPCAdapter;
 
-public class TestConfigCreator
+public class Main
 {
 
 	public static void main(String[] args)
 	{
-		// Config-Objekte erstellen (mit Testdaten)
-		Vector<String> testvector = new Vector<String>(3);
+		// Config-Objekt für Prosys Simulation erstellen
+		/*Vector<String> testvector = new Vector<String>(3);
 		testvector.add("Sinusoid1");
 		testvector.add("Counter1");
 		testvector.add("Triangle1");
 
 		Configuration c1 = new Configuration(
-				"opc.tcp://localhost:53530/OPCUA/SimulationServer", testvector);
+				"opc.tcp://localhost:53530/OPCUA/SimulationServer", testvector);*/
 		
 		// Config-Objekt für Straße erstellen
 		Vector<String> strassenvector = new Vector<String>(19);
@@ -47,39 +44,37 @@ public class TestConfigCreator
 		Configuration c2 = new Configuration(
 				"opc.tcp://192.168.0.102:49320", strassenvector);
 		
-		// Config-Objekte Marshallalalaen. (Obejekt to XML) //XML iwo speichern
-		
-		
-
 		try
 		{
-			JAXBContext jc = JAXBContext.newInstance(Configuration.class);
-			Marshaller m = jc.createMarshaller();
-			m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-			// OutputStream os = new
-			// FileOutputStream("C:\\Users\\D059185\\Documents\\workbench\\machine.xml"
-			// );
-			m.marshal(c1, System.out);// os );
+			//Prosys Simulation
 			//OPCAdapter opca1 = new OPCAdapter(c1);
 			//OPCConsumer opcc1 = new OPCConsumer("logs");
-			OPCAdapter opca2 = new OPCAdapter(c2);
-		    opca2.getData();
-			OPCConsumer opcc3 = new OPCConsumer("opc_logs");
-			ERPConsumer erp1 = new ERPConsumer("CUSTOMER_ORDER_QUEUE");
-			ERPConsumer erp2 = new ERPConsumer("MACHINE_ORDER_QUEUE");
-			OPCConsumer opcc2 = new OPCConsumer("logs");
-		    opcc2.receive();
 			//opca1.getData();
 			//opcc1.receive();
+			
+			//OPC-Adapter für Strasse
+			OPCAdapter opca2 = new OPCAdapter(c2);
+		    opca2.getData();
+		    
+		    //OPC-Consumer für Pi
+			OPCConsumer opcc2 = new OPCConsumer("NFC_DATA_QUEUE");
+			
+			//OPC-Consumer für Strasse
+			OPCConsumer opcc3 = new OPCConsumer("MACHINE_DATA_QUEUE");
+			
+			//ERP-Consumer für Kunden- und Maschinendaten
+			ERPConsumer erp1 = new ERPConsumer("CUSTOMER_ORDER_QUEUE");
+			ERPConsumer erp2 = new ERPConsumer("MACHINE_ORDER_QUEUE");
+
+			//Daten empfangen
+		    opcc2.receive();
 		    opcc3.receive();
 			erp1.receive();
 			erp2.receive();
 		}
 		catch (Exception e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 	}
 }

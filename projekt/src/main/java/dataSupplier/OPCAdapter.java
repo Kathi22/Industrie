@@ -155,7 +155,7 @@ public class OPCAdapter extends Adapter
         channel.exchangeDeclare(EXCHANGE_NAME, "fanout");
 
         channel.basicPublish(EXCHANGE_NAME, "", null, s.getBytes());
-        System.out.println(" [x] Sent '" + s + "'");
+        //System.out.println(" [x] Sent '" + s + "'");
 
         channel.close();
         connection.close();

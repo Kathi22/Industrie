@@ -37,7 +37,7 @@ public class ERPConsumer extends Consumer
 		String queueName = channel.queueDeclare().getQueue();
 		channel.queueBind(queueName, exchangeName, "");
 
-		System.out.println(" [*] Waiting for messages. To exit press CTRL+C");
+		System.out.println("[*] ERP-Consumer(" + exchangeName + "): Waiting for messages.");
 
 		this.setConsumer(new QueueingConsumer(channel));
 		channel.basicConsume(queueName, true, this.getConsumer());
@@ -57,16 +57,16 @@ public class ERPConsumer extends Consumer
 		{
 			//JAXBContext customerContext = JAXBContext.newInstance(CustomerOrder.class);
 			//Unmarshaller um = customerContext.createUnmarshaller();
+			//(CustomerOrder) um.unmarshal(new StreamSource(new StringReader(message)));
 			CustomerOrder co = (CustomerOrder) xstream.fromXML(message);
-					//um.unmarshal(new StreamSource(new StringReader(message)));
 			epService.getEPRuntime().sendEvent(co);
 		}
 		else if (this.exchangeName == "MACHINE_ORDER_QUEUE")
 		{
 			//JAXBContext machineContext = JAXBContext.newInstance(MachineOrder.class);
 			//Unmarshaller um = machineContext.createUnmarshaller();
+			//(MachineOrder) um.unmarshal(new StreamSource(new StringReader(message)));
 			MachineOrder mo = (MachineOrder) xstream.fromXML(message);
-					//(MachineOrder) um.unmarshal(new StreamSource(new StringReader(message)));
 			epService.getEPRuntime().sendEvent(mo);
 		}
 		
