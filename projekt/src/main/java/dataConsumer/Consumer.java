@@ -1,7 +1,5 @@
 package dataConsumer;
 
-import javax.xml.bind.JAXBException;
-
 import com.rabbitmq.client.QueueingConsumer;
 
 public abstract class Consumer {
@@ -12,7 +10,6 @@ public abstract class Consumer {
 	public Consumer(String exchangeName) {
 		this.EXCHANGE_NAME = exchangeName;
 	}
-
 	
 	public abstract void receive() throws Exception;
 	public abstract void process(String message) throws Exception;
@@ -26,6 +23,4 @@ public abstract class Consumer {
 	public void setConsumer(QueueingConsumer consumer) {
 		this.consumer = consumer;
 	}
-	
-	
 }

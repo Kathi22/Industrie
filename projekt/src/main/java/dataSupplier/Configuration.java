@@ -8,11 +8,13 @@ import javax.xml.bind.annotation.*;
 	      "url",
 	      "items"
 	})
+
 @XmlRootElement(name="Configuration")
 public class Configuration {
 
 		@XmlElement(required=true)
 		private String url; 
+		
 		@XmlElement(required=true)
 		private Vector<String> items; 
 		
